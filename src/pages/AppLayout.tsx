@@ -154,6 +154,34 @@ export default function AppLayout({ currentPage, onNavigate, records }: Props) {
         </main>
       </div>
 
+      {/* Mobile bottom nav */}
+      <nav className="mobile-nav" style={{
+        position: 'fixed', bottom: 0, left: 0, right: 0,
+        background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(8px)',
+        borderTop: '1px solid #EDE8E0',
+        display: 'none', alignItems: 'center', justifyContent: 'space-around',
+        padding: '6px 0 env(safe-area-inset-bottom, 6px)',
+        zIndex: 40,
+      }}>
+        {NAV_ITEMS.map(item => {
+          const active = currentPage === item.key;
+          return (
+            <button key={item.key} onClick={() => onNavigate(item.key)}
+              style={{
+                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1,
+                padding: '4px 8px', border: 'none', background: 'transparent',
+                cursor: 'pointer', color: active ? '#7C5CBF' : '#B8B0A8',
+                fontSize: 9, fontWeight: active ? 600 : 400, fontFamily: 'inherit',
+                transition: 'color 0.15s',
+              }}
+            >
+              <span style={{ fontSize: 16, lineHeight: 1 }}>{item.icon}</span>
+              <span style={{ fontSize: 9 }}>{item.label}</span>
+            </button>
+          );
+        })}
+      </nav>
+
       {/* Mobile search overlay */}
       {searchOpen && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 50, background: '#FAF6F1', animation: 'fadeInUp 0.2s ease', overflowY: 'auto' }}>
